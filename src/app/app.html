@@ -1,0 +1,10 @@
+<h1>Mission Control Center</h1>
+<div class="container">
+  <app-hero-card-component
+
+  *ngFor="let h of heroes"
+  [hero]="h"
+  (missionCompleted)="markAsDone($event)">
+  </app-hero-card-component>
+</div>
+<p>Missioni completate: {{ totalCompleted }}</p>
