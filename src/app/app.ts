@@ -1,34 +1,37 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {Hero} from "./models/hero.model";
-import {HeroCardComponent} from "./components/hero-card-component/hero-card-component";
+import { Hero } from "./models/hero.model";
+import { HeroCardComponent } from "./components/hero-card-component/hero-card-component";
+import { HeroCardForm } from "./components/hero-card-form/hero-card-form";
+import { CommonModule } from '@angular/common';
+import { HeroService } from './services/hero-service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeroCardComponent],
+  imports: [HeroCardComponent, CommonModule, HeroCardForm, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  heroes = signal<Hero[]>([
-    {id: 1, nome: 'Superman', potere: 'Super forza', completata: false},
-    {id: 2, nome: 'Batman', potere: 'Intelligenza', completata: false},
-    {id: 3, nome: 'Flash', potere: 'Super velocità', completata: false},
-  ]);
 
+  constructor(private heroService: HeroService) { }
 
   get totalCompleted() {
-    return this.heroes().filter(h => h.completata).length;
+    return this.heroService.heroes().filter(h => h.completata).length;
+  }
+
+  getHeroes() {
+    return this.heroService.heroes();
   }
 
   markAsDone(heroId: number) {
-    const updatedHeroes = this.heroes().map(h => {
+    this.heroService.heroes.set(this.heroService.heroes().map(h => {
       if (h.id === heroId) {
-        return {...h, completata: true};
+        return { ...h, completata: true };
       }
       return h;
-    });
-    this.heroes.set(updatedHeroes);
+    }));
   }
-  
+
+
 }

@@ -1,1 +1,11 @@
-<p>hero-card-component works!</p>
+<div class="card" [style.background-color]="hero.completata ? 'lightgreen'
+: 'white'">
+<h3>{{ hero.nome }}</h3>
+<p>Potere: {{ hero.potere }}</p>
+<button (click)="notifyParent()" [disabled]="hero.completata">
+Missione Compiuta
+</button>
+<button>
+    select hero
+</button>
+</div>
