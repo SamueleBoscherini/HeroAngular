@@ -1,5 +1,9 @@
 <form (submit)="addHero()">
-    <label for="nome">Nome:</label><input type="text" id="nome"> <br>
-    <label for="potere">Potere:</label><input type="text" id="potere"> <br>
+    <label for="id">id:</label>
+    <input [(ngModel)]="nuovoEroe.id" name="id" type="number" min="-1"> <br>
+    <label for="nome">Nome:</label>
+    <input [(ngModel)]="nuovoEroe.nome" name="nome"> <br>
+    <label for="potere">Potere:</label>
+    <input [(ngModel)]="nuovoEroe.potere" name="potere"> <br>
     <button type="submit">Aggiungi Eroe</button>
 </form>

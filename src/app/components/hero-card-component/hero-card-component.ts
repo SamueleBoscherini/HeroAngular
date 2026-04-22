@@ -15,4 +15,7 @@ export class HeroCardComponent {
   notifyParent(){
     this.missionCompleted.emit(this.hero.id);
   }
+  selectHero(){
+    alert(`Eroe selezionato: ${this.hero.nome}`);
+  }
 }
