@@ -11,6 +11,7 @@ import { HeroService } from '../../services/hero-service';
 })
 export class HeroCardForm {
 
+<<<<<<< HEAD
   constructor(private heroService: HeroService) { }
 
   nuovoHero: Signal<Hero> = computed(() => this.heroService.getSelectedHero());
@@ -22,5 +23,23 @@ export class HeroCardForm {
       this.heroService.updateHero(this.nuovoHero());
     }
 
+=======
+  nuovoEroe : Hero = {
+  id: 0,
+  nome: '',
+  potere: '',
+  completata: false
+  };
+
+  constructor(private heroService: HeroService){}
+
+  addHero(){
+    if(this.nuovoEroe.id !== -1 || this.nuovoEroe.nome.trim() === '' || this.nuovoEroe.potere.trim() === '') {
+      alert('Per favore, compila tutti i campi correttamente.');
+      return;
+    }
+    this.nuovoEroe.id = this.heroService.heroes().length + 1;
+    this.heroService.heroes.update(heroes => [...heroes, this.nuovoEroe])
+>>>>>>> 73b0e7303cfc148a973f23081d2f605c7b268ece
   }
 }
