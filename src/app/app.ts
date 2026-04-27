@@ -20,18 +20,12 @@ export class App {
     return this.heroService.heroes().filter(h => h.completata).length;
   }
 
-  getHeroes() {
-    return this.heroService.heroes();
+  getheroService() {
+    return this.heroService;
   }
 
-  markAsDone(heroId: number) {
-    this.heroService.heroes.set(this.heroService.heroes().map(h => {
-      if (h.id === heroId) {
-        return { ...h, completata: true };
-      }
-      return h;
-    }));
-  }
+
+
 
 
 }

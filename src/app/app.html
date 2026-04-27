@@ -1,6 +1,6 @@
 <h1>Mission Control Center</h1>
 <div class="container">
-  <app-hero-card-component *ngFor="let hero of getHeroes()" [hero]="hero" (missionCompleted)="markAsDone($event)">
+  <app-hero-card-component *ngFor="let hero of  getheroService().heroes()" [hero]="hero">
     {{ hero.nome }}
   </app-hero-card-component> <br>
   <app-hero-card-form></app-hero-card-form>
