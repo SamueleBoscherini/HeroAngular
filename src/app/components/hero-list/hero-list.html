@@ -1,1 +1,7 @@
-<p>hero-list works!</p>
+<h1>Mission Control Center</h1>
+<div class="container">
+  <app-hero-card-component *ngFor="let hero of list()" [hero]="hero">
+    {{ hero.nome }}
+  </app-hero-card-component> <br>
+</div>
+<p>Missioni completate: {{ totalCompleted }}</p>

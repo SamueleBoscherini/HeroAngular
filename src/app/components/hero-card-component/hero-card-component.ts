@@ -1,4 +1,4 @@
-import { Component, signal, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Signal, EventEmitter, Input, Output } from '@angular/core';
 import { Hero } from "../../models/hero.model";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { HeroService } from '../../services/hero-service';
 })
 export class HeroCardComponent {
   @Input() hero!: Hero;
+
+
 
   constructor(private heroService: HeroService) { }
 

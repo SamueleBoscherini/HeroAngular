@@ -1,6 +1,7 @@
+<h1>Creazione / Modifica Eroe</h1>
 <form (submit)="invioForm()">
     <label>Id :</label>
-    <input [(ngModel)]="nuovoHero().id" type="number" name="id"> <br>
+    <input [(ngModel)]="nuovoHero().id" type="number" name="id" min="-1"> <br>
     <label>Nome:</label>
     <input [(ngModel)]="nuovoHero().nome" name="nome"> <br>
     <label>Potere:</label>

@@ -1,14 +1,19 @@
 import { Injectable, signal } from '@angular/core';
 import { Hero } from '../models/hero.model';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeroService {
+  private apiUrl = 'https://crudcrud.com/api/d54c6fb6e8254e10a2898fb4f464a366/hero';
+
+  private constructor(private http: HttpClient) { }
+
   heroes = signal<Hero[]>([
-    { id: 1, nome: 'Superman', potere: 'Super forza', completata: false },
-    { id: 2, nome: 'Batman', potere: 'Intelligenza', completata: false },
-    { id: 3, nome: 'Flash', potere: 'Super velocità', completata: false }
+    { id: 1, nome: '', potere: '', completata: false },
   ]);
 
   hero = signal<Hero>({
@@ -29,7 +34,14 @@ export class HeroService {
       potere,
       completata: false
     };
-    this.heroes.update(heroes => [...heroes, newHero]);
+    this.creaHero(newHero).subscribe({
+      next: (hero) => {
+        console.log('Eroe aggiunto:', hero);
+        this.heroes.set([...this.heroes(), hero]);
+      },
+      error: (err) => console.error('Errore nell\'aggiunta eroe', err)
+    });
+
   }
 
   getSelectedHero(): Hero {
@@ -44,7 +56,14 @@ export class HeroService {
       return hero;
     }));
 
+  }
+
+  getHeroes(): Observable<Hero[]> {
+    return this.http.get<Hero[]>(this.apiUrl);
+  }
 
 
+  creaHero(hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.apiUrl, hero);
   }
 }

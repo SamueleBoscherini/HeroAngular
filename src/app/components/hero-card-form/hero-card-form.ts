@@ -16,6 +16,17 @@ export class HeroCardForm {
   nuovoHero: Signal<Hero> = computed(() => this.heroService.getSelectedHero());
 
   invioForm() {
+
+    if (!this.nuovoHero().nome || !this.nuovoHero().potere) {
+      alert("Nome e potere sono obbligatori.");
+      return;
+    }
+
+    if (this.nuovoHero().id < -1) {
+      alert("Id non valido. Deve essere -1 per un nuovo eroe o un id esistente per modificare.");
+      return;
+    }
+
     if (this.nuovoHero().id === -1) {
       this.heroService.addHero(this.nuovoHero().nome, this.nuovoHero().potere);
     } else {
