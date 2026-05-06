@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Hero } from '../models/hero.model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -8,13 +8,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
   providedIn: 'root',
 })
 export class HeroService {
-  private apiUrl = 'https://crudcrud.com/api/d54c6fb6e8254e10a2898fb4f464a366/hero';
+  private apiUrl = 'https://payments-cri.free.beeceptor.com/api/hero';
 
   private constructor(private http: HttpClient) { }
 
-  heroes = signal<Hero[]>([
-    { id: 1, nome: '', potere: '', completata: false },
-  ]);
+  heroes = signal<Hero[]>([]);
 
   hero = signal<Hero>({
     id: -1,
@@ -36,7 +34,6 @@ export class HeroService {
     };
     this.creaHero(newHero).subscribe({
       next: (hero) => {
-        console.log('Eroe aggiunto:', hero);
         this.heroes.set([...this.heroes(), hero]);
       },
       error: (err) => console.error('Errore nell\'aggiunta eroe', err)
@@ -49,6 +46,7 @@ export class HeroService {
   }
 
   updateHero(updatedHero: Hero) {
+    this.hero.set(updatedHero);
     this.heroes.set(this.heroes().map(hero => {
       if (hero.id === updatedHero.id) {
         return { ...updatedHero };
@@ -59,7 +57,14 @@ export class HeroService {
   }
 
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.apiUrl);
+    return this.http.get<Hero[]>(this.apiUrl).pipe(
+      tap(heroes => this.heroes.set(heroes))
+    );
+  }
+
+  setHeroes() {
+    const newHeroes = toSignal(this.getHeroes(), { initialValue: [] });
+    this.heroes.set(newHeroes());
   }
 
 
